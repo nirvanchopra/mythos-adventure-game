@@ -2,7 +2,12 @@
 
 let rawApiUrl = import.meta.env.VITE_API_BASE_URL || '/api';
 
-// If rawApiUrl is a hostname without protocol (e.g. "mythos-backend.onrender.com" from Render blueprint)
+// If rawApiUrl is a Render internal hostname without domain (e.g. "mythos-backend-m6k6"), append ".onrender.com"
+if (rawApiUrl && !rawApiUrl.includes('.') && !rawApiUrl.startsWith('/')) {
+  rawApiUrl = `${rawApiUrl}.onrender.com`;
+}
+
+// If rawApiUrl is a hostname without protocol (e.g. "mythos-backend-m6k6.onrender.com")
 if (rawApiUrl && !rawApiUrl.startsWith('http://') && !rawApiUrl.startsWith('https://') && !rawApiUrl.startsWith('/')) {
   const protocol = typeof window !== 'undefined' && window.location.protocol === 'http:' ? 'http:' : 'https:';
   rawApiUrl = `${protocol}//${rawApiUrl}`;
@@ -17,6 +22,9 @@ export function getWebSocketUrl(path) {
 
   let wsBase = import.meta.env.VITE_WS_BASE_URL;
   if (wsBase) {
+    if (!wsBase.includes('.') && !wsBase.startsWith('/')) {
+      wsBase = `${wsBase}.onrender.com`;
+    }
     if (!wsBase.startsWith('ws://') && !wsBase.startsWith('wss://')) {
       const wsProtocol = typeof window !== 'undefined' && window.location.protocol === 'http:' ? 'ws:' : 'wss:';
       wsBase = `${wsProtocol}//${wsBase.replace(/^https?:\/\//, '')}`;
