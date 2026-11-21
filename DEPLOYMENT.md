@@ -81,7 +81,7 @@ This project contains a pre-configured `render.yaml` blueprint file at the root.
 2. Select your repository.
 3. Fill in the details:
    - **Name**: `mythos-backend`
-   - **Region**: `Ohio (US East)` (matches your Neon database region `us-east-2` for minimal latency)
+   - **Region**: `Oregon (US West)` or Default
    - **Branch**: `main`
    - **Root Directory**: Leave blank (uses repo root)
    - **Runtime**: `Python`
