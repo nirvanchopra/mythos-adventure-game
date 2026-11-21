@@ -1,0 +1,30 @@
+[project]
+name = "backend"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Nirvan", email = "nirvan@bpcl.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "bcrypt>=5.0.0",
+    "fastapi[all]>=0.162.5",
+    "httpx>=0.28.1",
+    "langchain>=1.5.0",
+    "langchain-google-genai>=4.5.0",
+    "langchain-openai>=1.7.4",
+    "psycopg2-binary>=2.9.13",
+    "psycopg[binary]>=3.3.9",
+    "pydantic-settings>=2.16.2",
+    "pyjwt>=2.15.1",
+    "pytest>=9.2.0",
+    "sqlalchemy>=2.1.8",
+]
+
+[project.scripts]
+backend = "backend:main"
+
+[build-system]
+requires = ["uv_build>=0.13.7,<0.14.0"]
+build-backend = "uv_build"
