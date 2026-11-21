@@ -1,6 +1,15 @@
 // API and WebSocket helpers for local and production deployment
 
-let rawApiUrl = import.meta.env.VITE_API_BASE_URL || '/api';
+const isRenderDeployment = typeof window !== 'undefined' && window.location.hostname.includes('onrender.com');
+
+let rawApiUrl = import.meta.env.VITE_API_BASE_URL;
+
+// If on Render production and no explicit external API URL was baked in, default to the live backend URL
+if (!rawApiUrl || rawApiUrl === '/api') {
+  rawApiUrl = isRenderDeployment 
+    ? 'https://mythos-backend-m6k6.onrender.com/api' 
+    : '/api';
+}
 
 // If rawApiUrl is a Render internal hostname without domain (e.g. "mythos-backend-m6k6"), append ".onrender.com"
 if (rawApiUrl && !rawApiUrl.includes('.') && !rawApiUrl.startsWith('/')) {
@@ -21,6 +30,10 @@ export function getWebSocketUrl(path) {
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
 
   let wsBase = import.meta.env.VITE_WS_BASE_URL;
+  if (!wsBase && isRenderDeployment) {
+    wsBase = 'wss://mythos-backend-m6k6.onrender.com/ws';
+  }
+
   if (wsBase) {
     if (!wsBase.includes('.') && !wsBase.startsWith('/')) {
       wsBase = `${wsBase}.onrender.com`;

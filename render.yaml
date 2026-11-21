@@ -47,13 +47,6 @@ services:
         destination: /index.html
     envVars:
       - key: VITE_API_BASE_URL
-        fromService:
-          type: web
-          name: mythos-backend
-          property: host
-        # Forms: https://mythos-backend.onrender.com/api
+        value: https://mythos-backend-m6k6.onrender.com/api
       - key: VITE_WS_BASE_URL
-        fromService:
-          type: web
-          name: mythos-backend
-          property: host
+        value: wss://mythos-backend-m6k6.onrender.com/ws
